@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asy's Beverages — Yoghurt, Ice Cream &amp; Drinks</title>
+<meta name="description" content="Asy's Beverages — fresh yoghurt, ice cream, and a variety of drinks, made fresh.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream:#FFFBF0;
+    --cream-2:#FFF3D6;
+    --yellow:#F2A71B;
+    --yellow-deep:#D98D0A;
+    --blue:#5EC3E0;
+    --blue-deep:#2E9FC2;
+    --red:#D62828;
+    --red-deep:#B01E1E;
+    --dark:#2B2114;
+    --dark-soft:#6B5C45;
+    --line:rgba(43,33,20,0.14);
+    --line-strong:rgba(43,33,20,0.26);
+    --shadow:0 24px 60px -24px rgba(43,33,20,0.28);
+    --radius-m:14px;
+    --radius-l:22px;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--cream);color:var(--dark);
+    font-family:'Work Sans',sans-serif;font-weight:400;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--yellow);color:var(--dark);}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  h1,h2,h3,.display{font-family:'Baloo 2',sans-serif;}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 26px;}
+  @media(min-width:768px){.wrap{padding:0 48px;}}
+
+  .eyebrow{
+    font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--red);
+    font-weight:700;display:inline-flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{content:'';width:22px;height:2px;border-radius:2px;background:var(--blue);}
+
+  .section-head{margin-bottom:50px;text-align:center;}
+  .section-head h2{font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--dark);margin:12px 0 0;letter-spacing:-0.01em;}
+  .section-head p.lede{color:var(--dark-soft);max-width:520px;margin:14px auto 0;font-size:15px;line-height:1.6;}
+
+  section{position:relative;padding:96px 0;}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-stag > *{opacity:0;transform:translateY(20px);transition:opacity .65s var(--ease),transform .65s var(--ease);}
+  .reveal-stag.in > *{opacity:1;transform:translateY(0);}
+  .reveal-stag.in > *:nth-child(1){transition-delay:.02s}
+  .reveal-stag.in > *:nth-child(2){transition-delay:.08s}
+  .reveal-stag.in > *:nth-child(3){transition-delay:.14s}
+  .reveal-stag.in > *:nth-child(4){transition-delay:.20s}
+  .reveal-stag.in > *:nth-child(5){transition-delay:.26s}
+  .reveal-stag.in > *:nth-child(6){transition-delay:.32s}
+  .reveal-stag.in > *:nth-child(7){transition-delay:.38s}
+  .reveal-stag.in > *:nth-child(8){transition-delay:.44s}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal,.reveal-stag > *{opacity:1 !important;transform:none !important;transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* WAVE DIVIDER (signature element — drink/splash motif) */
+  .wave{display:block;width:100%;height:56px;}
+  .wave path{fill:var(--cream);}
+  .wave.flip{transform:rotate(180deg);}
+
+  /* BUTTONS */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    padding:15px 30px;font-size:13.5px;font-weight:700;border-radius:999px;border:2px solid transparent;
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .3s ease,border-color .3s ease;
+    white-space:nowrap;letter-spacing:0.01em;
+  }
+  .btn-yellow{background:var(--yellow);color:var(--dark);}
+  .btn-yellow:hover{background:var(--yellow-deep);transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(217,141,10,0.5);}
+  .btn-blue{background:var(--blue);color:#fff;}
+  .btn-blue:hover{background:var(--blue-deep);transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(46,159,194,0.5);}
+  .btn-ghost{border-color:var(--line-strong);color:var(--dark);background:transparent;}
+  .btn-ghost:hover{background:rgba(43,33,20,0.05);border-color:var(--dark-soft);transform:translateY(-2px);}
+
+  /* NAV */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;
+    transition:background .5s ease,padding .5s ease,box-shadow .5s ease;
+  }
+  header.scrolled{background:rgba(255,251,240,0.92);backdrop-filter:blur(14px);padding:10px 0;box-shadow:0 6px 24px -12px rgba(43,33,20,0.18);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;}
+  .wordmark{display:inline-flex;align-items:center;gap:11px;}
+  .wordmark img{height:46px;width:auto;object-fit:contain;flex:0 0 auto;}
+  .nav-links{display:none;gap:36px;font-size:13.5px;font-weight:600;}
+  @media(min-width:960px){.nav-links{display:flex;}}
+  .nav-links a{position:relative;padding:4px 0;transition:color .3s ease;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:2px;background:var(--red);transition:width .35s var(--ease);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{display:none;}
+  @media(min-width:960px){.nav-cta{display:inline-flex;}}
+
+  .burger{display:flex;flex-direction:column;gap:5px;width:26px;background:none;border:none;padding:4px;}
+  @media(min-width:960px){.burger{display:none;}}
+  .burger span{height:2px;width:100%;border-radius:2px;background:var(--dark);transition:transform .35s var(--ease),opacity .35s ease;}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed;inset:0;background:rgba(255,251,240,0.98);backdrop-filter:blur(16px);z-index:999;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;
+    opacity:0;pointer-events:none;transition:opacity .5s var(--ease);
+  }
+  .mobile-menu.open{opacity:1;pointer-events:auto;}
+  .mobile-menu a{font-family:'Baloo 2',sans-serif;font-size:27px;color:var(--dark);font-weight:600;opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
+  .mobile-menu.open a{opacity:1;transform:translateY(0);}
+  .mobile-menu.open a:nth-child(1){transition-delay:.08s}
+  .mobile-menu.open a:nth-child(2){transition-delay:.14s}
+  .mobile-menu.open a:nth-child(3){transition-delay:.20s}
+  .mobile-menu.open a:nth-child(4){transition-delay:.26s}
+  .mobile-menu.open a:nth-child(5){transition-delay:.32s}
+
+  /* HERO */
+  .hero{
+    position:relative;min-height:86svh;display:flex;align-items:center;overflow:hidden;padding-top:96px;
+  }
+  .hero-blob{position:absolute;border-radius:50%;filter:blur(55px);opacity:0.5;z-index:0;}
+  .hero-blob.b1{width:420px;height:420px;background:var(--yellow);opacity:0.22;top:-140px;right:-100px;}
+  .hero-blob.b2{width:340px;height:340px;background:var(--blue);opacity:0.22;bottom:-120px;left:-90px;}
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr;gap:44px;align-items:center;}
+  @media(min-width:960px){.hero-grid{grid-template-columns:1.05fr 0.95fr;}}
+  .hero-copy .eyebrow{margin-bottom:16px;}
+  .hero-copy h1{font-size:clamp(34px,5.6vw,58px);line-height:1.08;font-weight:800;margin:0 0 18px;letter-spacing:-0.01em;color:var(--dark);}
+  .hero-copy h1 span{color:var(--blue-deep);}
+  .hero-copy p.sub{font-size:15.5px;color:var(--dark-soft);max-width:440px;margin:0 0 30px;line-height:1.65;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+
+  .hero-visual{position:relative;display:flex;align-items:center;justify-content:center;}
+  .splash-shape{
+    position:relative;width:min(360px,80vw);aspect-ratio:1;
+    background:#fff;box-shadow:var(--shadow);
+    border-radius:62% 38% 55% 45% / 48% 55% 45% 52%;
+    display:flex;align-items:center;justify-content:center;
+    animation:morph 12s ease-in-out infinite;
+  }
+  .splash-shape img{width:64%;height:64%;object-fit:contain;}
+  @keyframes morph{
+    0%,100%{border-radius:62% 38% 55% 45% / 48% 55% 45% 52%;}
+    33%{border-radius:45% 55% 40% 60% / 55% 40% 60% 45%;}
+    66%{border-radius:55% 45% 62% 38% / 40% 60% 40% 60%;}
+  }
+  .bubble{position:absolute;border-radius:50%;}
+  .bubble.bu1{width:26px;height:26px;background:var(--yellow);top:6%;right:14%;opacity:0.8;animation:float1 5s ease-in-out infinite;}
+  .bubble.bu2{width:16px;height:16px;background:var(--red);bottom:14%;right:2%;opacity:0.75;animation:float2 6.5s ease-in-out infinite;}
+  .bubble.bu3{width:20px;height:20px;background:var(--blue);bottom:4%;left:10%;opacity:0.8;animation:float1 5.8s ease-in-out infinite reverse;}
+  @keyframes float1{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+  @keyframes float2{0%,100%{transform:translateY(0);}50%{transform:translateY(12px);}}
+  @media (prefers-reduced-motion: reduce){.splash-shape{animation:none;}.bubble{animation:none;}}
+
+  /* TRUST STRIP — bubble cards on a dotted rail */
+  .trust-strip{padding:20px 0 44px;position:relative;}
+  .trust-row{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;}
+  .trust-item{
+    display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);
+    border-radius:999px;padding:12px 22px 12px 12px;font-size:13px;font-weight:700;color:var(--dark);
+    box-shadow:0 10px 26px -14px rgba(43,33,20,0.25);
+  }
+  .trust-icon{
+    width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:#fff;
+  }
+  .trust-item:nth-child(1) .trust-icon{background:var(--yellow);}
+  .trust-item:nth-child(2) .trust-icon{background:var(--blue);}
+  .trust-item:nth-child(3) .trust-icon{background:var(--red);}
+  .trust-icon svg{width:16px;height:16px;}
+
+  /* PRODUCTS */
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:40px;}
+  .tab-btn{
+    background:#fff;border:2px solid var(--line);color:var(--dark-soft);
+    padding:11px 26px;border-radius:999px;font-size:13.5px;font-weight:700;transition:all .4s var(--ease);
+  }
+  .tab-btn:hover{border-color:var(--yellow);color:var(--dark);}
+  .tab-btn.active{background:var(--yellow);border-color:var(--yellow);color:var(--dark);box-shadow:0 10px 24px -12px rgba(217,141,10,0.5);}
+  .menu-grid{display:grid;grid-template-columns:1fr;gap:24px;}
+  @media(min-width:640px){.menu-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(min-width:1000px){.menu-grid{grid-template-columns:repeat(4,1fr);}}
+
+  .item-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-l);overflow:hidden;
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease);display:flex;flex-direction:column;
+  }
+  .item-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);}
+  .item-media{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--cream-2);}
+  .item-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease);}
+  .item-card:hover .item-media img{transform:scale(1.08);}
+  .ph-placeholder{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    color:var(--dark-soft);background:linear-gradient(135deg,var(--cream-2),#f5e6c0);
+  }
+  .ph-placeholder svg{width:28px;height:28px;opacity:0.6;}
+  .ph-placeholder span{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.7;text-align:center;padding:0 10px;}
+  .item-body{padding:16px 16px 20px;flex:1;display:flex;flex-direction:column;gap:8px;}
+  .item-body h3{font-size:16.5px;font-weight:700;margin:0;color:var(--dark);}
+  .item-body p{font-size:12.5px;color:var(--dark-soft);line-height:1.5;margin:0;flex:1;}
+  .price-row{display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap;}
+  .price-tag{background:var(--red);color:#fff;font-size:12.5px;font-weight:700;padding:5px 13px;border-radius:999px;}
+  .pack-note{font-size:11px;color:var(--dark-soft);background:var(--cream-2);padding:4px 10px;border-radius:999px;}
+
+  .note-card{
+    margin-top:36px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between;
+    background:var(--dark);color:var(--cream);border-radius:var(--radius-l);padding:26px 30px;
+  }
+  .note-card p{margin:0;font-size:14.5px;max-width:460px;}
+  .note-card strong{color:var(--yellow);}
+
+  /* ABOUT — stat tiles instead of quote block */
+  .about-grid{display:grid;grid-template-columns:1fr;gap:36px;align-items:center;}
+  @media(min-width:900px){.about-grid{grid-template-columns:1fr 1fr;}}
+  .about-copy p{color:var(--dark-soft);line-height:1.75;font-size:15px;margin:0 0 18px;}
+  .stat-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .stat-tile{
+    background:#fff;border-radius:var(--radius-m);padding:22px 12px;text-align:center;
+    box-shadow:0 14px 30px -18px rgba(43,33,20,0.3);border-bottom:4px solid var(--yellow);
+  }
+  .stat-tile:nth-child(2){border-bottom-color:var(--blue);}
+  .stat-tile:nth-child(3){border-bottom-color:var(--red);}
+  .stat-tile strong{display:block;font-family:'Baloo 2',sans-serif;font-size:22px;color:var(--dark);font-weight:800;}
+  .stat-tile span{font-size:11px;color:var(--dark-soft);text-transform:uppercase;letter-spacing:0.05em;}
+
+  /* PERFECT FOR */
+  .perfect-for{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(min-width:640px){.perfect-for{grid-template-columns:repeat(5,1fr);}}
+  .pf-item{
+    display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
+    background:#fff;border-radius:var(--radius-m);padding:24px 12px;
+    box-shadow:0 14px 30px -18px rgba(43,33,20,0.28);transition:transform .4s var(--ease);
+  }
+  .pf-item:hover{transform:translateY(-5px);}
+  .pf-icon{
+    width:46px;height:46px;border-radius:50%;background:var(--cream-2);color:var(--red);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pf-icon svg{width:20px;height:20px;}
+  .pf-item span{font-size:13px;font-weight:700;color:var(--dark);}
+
+  /* ORDER — horizontal icon steps + single CTA, not a split card */
+  .order-flow{display:grid;grid-template-columns:1fr;gap:26px;margin-bottom:38px;}
+  @media(min-width:760px){.order-flow{grid-template-columns:repeat(3,1fr);}}
+  .flow-step{
+    background:#fff;border-radius:var(--radius-l);padding:28px 22px;text-align:center;
+    box-shadow:0 14px 30px -18px rgba(43,33,20,0.28);
+  }
+  .flow-icon{
+    width:52px;height:52px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .flow-step:nth-child(1) .flow-icon{background:var(--yellow);}
+  .flow-step:nth-child(2) .flow-icon{background:var(--blue);}
+  .flow-step:nth-child(3) .flow-icon{background:var(--red);}
+  .flow-icon svg{width:22px;height:22px;}
+  .flow-step strong{display:block;font-size:15px;color:var(--dark);margin-bottom:6px;font-family:'Baloo 2',sans-serif;}
+  .flow-step p{font-size:13px;color:var(--dark-soft);margin:0;line-height:1.5;}
+  .order-cta-banner{
+    background:var(--dark);border-radius:var(--radius-l);padding:36px;text-align:center;color:var(--cream);
+  }
+  .order-cta-banner h3{margin:0 0 8px;font-size:22px;font-weight:700;color:#fff;}
+  .order-cta-banner p{color:rgba(255,251,240,0.75);font-size:14px;margin:0 0 20px;}
+
+  /* FOOTER */
+  footer{background:var(--dark);color:var(--cream);padding-top:0;}
+  .foot-inner{padding:70px 0 0;}
+  .foot-grid{display:grid;grid-template-columns:1fr;gap:40px;padding-bottom:50px;}
+  @media(min-width:720px){.foot-grid{grid-template-columns:1.3fr 1fr;}}
+  .foot-brand .wordmark img{height:52px;filter:brightness(0) invert(1);}
+  .foot-brand p{color:rgba(255,251,240,0.65);font-size:13.5px;line-height:1.6;max-width:280px;margin:14px 0 20px;}
+  .soc-row{display:flex;gap:14px;}
+  .soc{width:36px;height:36px;border:1px solid rgba(255,251,240,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--yellow);transition:all .35s var(--ease);}
+  .soc:hover{border-color:var(--yellow);box-shadow:0 0 16px -2px rgba(242,167,27,0.5);transform:translateY(-2px);}
+  .soc svg{width:15px;height:15px;}
+  .foot-col h4{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--yellow);margin:0 0 20px;font-weight:700;}
+  .contact-line{display:flex;align-items:center;gap:10px;color:rgba(255,251,240,0.75);font-size:13.5px;margin-bottom:14px;transition:color .3s ease;}
+  .contact-line:hover{color:var(--yellow);}
+  .contact-line svg{width:15px;height:15px;flex:0 0 auto;color:var(--yellow);}
+  .bottom-bar{border-top:1px solid rgba(255,251,240,0.14);padding:22px 0;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,251,240,0.55);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header id="siteHeader">
+  <div class="wrap nav-row">
+    <a href="#top" class="wordmark"><img src="https://i.postimg.cc/2jb3sDsv/image.png" alt="Asy's Beverages logo"></a>
+    <nav class="nav-links">
+      <a href="#top">Home</a>
+      <a href="#about">About</a>
+      <a href="#menu">Our Products</a>
+      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="#order" class="btn btn-blue nav-cta">Order Now</a>
+      <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#top">Home</a>
+  <a href="#about">About</a>
+  <a href="#menu">Our Products</a>
+  <a href="#order">Order</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-blob b1"></div>
+    <div class="hero-blob b2"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Yoghurt • Ice Cream • Drinks</span>
+        <h1>Cool, Creamy &amp;<br><span>Made Fresh</span></h1>
+        <p class="sub">Naturally refreshing, deliciously crafted — fresh yoghurt, rich ice cream, and a variety of drinks, made fresh.</p>
+        <div class="hero-ctas">
+          <a href="https://wa.me/2348035368429" target="_blank" rel="noopener" class="btn btn-yellow">Order Now</a>
+          <a href="#menu" class="btn btn-ghost">View Products</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="splash-shape">
+          <img src="https://i.postimg.cc/2jb3sDsv/image.png" alt="Asy's Beverages logo">
+          <span class="bubble bu1"></span>
+          <span class="bubble bu2"></span>
+          <span class="bubble bu3"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="wrap trust-row">
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></div>
+        Fresh Ingredients Always
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        Made Fresh Daily
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg></div>
+        Great Taste Guaranteed
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section id="menu">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" style="justify-content:center;">Our Products</span>
+        <h2>Yoghurt, Ice Cream &amp; Drinks</h2>
+        <p class="lede">A taste of what we make — ask us about custom flavors and sizes.</p>
+      </div>
+
+      <div class="tabs" id="tabBar">
+        <button class="tab-btn active" data-tab="yoghurt">Yoghurts</button>
+        <button class="tab-btn" data-tab="drinks">Drinks</button>
+      </div>
+
+      <div class="menu-grid reveal-stag" id="menuGrid"></div>
+
+      <div class="note-card reveal" style="background:var(--red);margin-top:36px;">
+        <p style="color:#fff;">🍼 <strong style="color:#fff;">Mini Drink Bottles (250ml)</strong> — perfect for events &amp; parties.</p>
+        <span class="price-tag" style="background:#fff;color:var(--red);font-size:15px;padding:9px 20px;">Pack of 50 — ₦40,000</span>
+      </div>
+
+      <div class="note-card reveal">
+        <p>Don't see what you're craving? <strong>Custom orders welcome</strong> — message us with your flavor and size.</p>
+        <a href="https://wa.me/2348035368429" target="_blank" rel="noopener" class="btn btn-yellow">Order Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" style="background:var(--cream-2);">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="stat-tiles">
+            <div class="stat-tile"><strong>100%</strong><span>Fresh Made</span></div>
+            <div class="stat-tile"><strong>Many</strong><span>Flavors</span></div>
+            <div class="stat-tile"><strong>Custom</strong><span>Sizes</span></div>
+          </div>
+        </div>
+        <div class="about-copy reveal">
+          <span class="eyebrow">Our Story</span>
+          <h2 style="margin:14px 0 20px;font-size:clamp(24px,3vw,32px);font-weight:700;">Cool treats, made with care</h2>
+          <p>Asy's Beverages started with a love for fresh, simple ingredients — turned into yoghurt, ice cream, and drinks people actually crave. Every batch is made fresh, never rushed.</p>
+          <p>Whether you're after a quick refreshing drink or a tub of ice cream for the whole family, we make it with the same care every time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERFECT FOR -->
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" style="justify-content:center;">Goodness In Every Sip</span>
+        <h2>Perfect For</h2>
+      </div>
+      <div class="perfect-for reveal-stag">
+        <div class="pf-item">
+          <div class="pf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <span>Events</span>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v6M8 8l4-6 4 6M5 22h14l-2-9H7z"/></svg></div>
+          <span>Parties</span>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg></div>
+          <span>Weddings</span>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="7" r="3"/><path d="M2 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2"/><circle cx="18" cy="8" r="2.2"/><path d="M22 21v-1.6a4 4 0 0 0-2.7-3.8"/></svg></div>
+          <span>Meetings</span>
+        </div>
+        <div class="pf-item">
+          <div class="pf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21v-7a8 8 0 0 1 16 0v7M2 21h20M12 3v3"/></svg></div>
+          <span>Celebrations</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section id="order">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">How To Order</span>
+        <h2>Get Your Order Started</h2>
+      </div>
+
+      <div class="order-flow reveal-stag">
+        <div class="flow-step">
+          <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <strong>1. Message Us</strong>
+          <p>Send a message with what you'd like and how many.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <strong>2. Confirm Details</strong>
+          <p>We'll confirm flavors, quantity, and your pickup or delivery date.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg></div>
+          <strong>3. Enjoy Fresh</strong>
+          <p>Your order is made fresh and ready on the day you need it.</p>
+        </div>
+      </div>
+
+      <div class="order-cta-banner reveal">
+        <h3>Ready to order?</h3>
+        <p>Reach out directly and we'll sort out the rest — flavors, sizes, and delivery.</p>
+        <a href="https://wa.me/2348035368429" target="_blank" rel="noopener" class="btn btn-yellow">Message Us on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="wrap foot-inner">
+    <div class="foot-grid">
+      <div class="foot-col foot-brand">
+        <a href="#top" class="wordmark"><img src="https://i.postimg.cc/2jb3sDsv/image.png" alt="Asy's Beverages logo"></a>
+        <p>Fresh yoghurt, ice cream, and drinks — made with care, one batch at a time.</p>
+        <div class="soc-row">
+          <a href="https://www.instagram.com/asys_beverages" target="_blank" rel="noopener" class="soc" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="tel:+2348035368429" class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
+          0803 536 8429
+        </a>
+        <a href="https://wa.me/2348035368429" target="_blank" rel="noopener" class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Message on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <span>© 2026 Asy's Beverages. All Rights Reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const header = document.getElementById('siteHeader');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    burger.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stag');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold: 0.12});
+  revealEls.forEach(el => io.observe(el));
+
+  /* Add products below in this format:
+     {name:"Item Name", desc:"Short description.", img:"IMAGE_LINK", price:"₦0,000", pack:"500g" or "1 Litre" etc}, */
+  const items = [
+    {name:"Ginger Drink", desc:"Bold, spicy-sweet ginger drink, naturally refreshing.", price:"₦1,000", pack:"35cl Bottle", img:"https://i.postimg.cc/PqyZZZGj/image.png", cats:["drinks"]},
+    {name:"Zobo Drink", desc:"Classic hibiscus zobo, deep in color and flavor.", price:"₦1,000", pack:"35cl Bottle", img:"https://i.postimg.cc/Y0WhXLPB/image.png", cats:["drinks"]},
+    {name:"Tamarind Drink", desc:"Tangy-sweet tamarind, a refreshing house favorite.", price:"₦1,000", pack:"35cl Bottle", img:"https://i.postimg.cc/mDqwnqbT/image.png", cats:["drinks"]},
+    {name:"Baobab Drink", desc:"Smooth and tangy, made from real baobab fruit.", price:"₦1,000", pack:"35cl Bottle", img:"https://i.postimg.cc/VvnjVkGF/image.png", cats:["drinks"]},
+    {name:"Tigernut Drink", desc:"Creamy, naturally sweet tigernut milk drink.", price:"₦1,200", pack:"35cl Bottle", img:"https://i.postimg.cc/DyhszFYs/image.png", cats:["drinks"]},
+    {name:"Millet Drink", desc:"Light and wholesome millet drink.", price:"₦500", pack:"35cl Bottle", img:"https://i.postimg.cc/RZN0SD9t/image.png", cats:["drinks"]},
+    {name:"Plain Yoghurt", desc:"Creamy &amp; Delicious.", price:"₦4,500", pack:"1 Litre Tub", img:"https://i.postimg.cc/pLkSsjCY/image.png", cats:["yoghurt"]},
+    {name:"Plain Yoghurt", desc:"Creamy &amp; Delicious.", price:"₦2,500", pack:"500ml Bottle", img:"https://i.postimg.cc/pXCkvHFq/image.png", cats:["yoghurt"]},
+    {name:"Yogo Fura", desc:"Traditional Taste, Perfect Blend.", price:"₦3,000 – ₦5,500", pack:"500ml / 1 Litre Tub", img:"https://i.postimg.cc/BvnT4YFM/image.png", cats:["yoghurt"]},
+    {name:"Greek Yoghurt", desc:"Thick, Creamy &amp; Nutritious.", price:"₦7,500", pack:"1 Litre Tub", img:"https://i.postimg.cc/PxmrchxG/image.png", cats:["yoghurt"]},
+    {name:"Minis", desc:"Perfect On The Go!", price:"₦1,500", pack:"250ml", img:"https://i.postimg.cc/tgqsHKFc/image.png", cats:["yoghurt"]}
+  ];
+
+  const grid = document.getElementById('menuGrid');
+  function renderTab(tab){
+    grid.innerHTML = '';
+    grid.classList.remove('in');
+    const filtered = items.filter(i => i.cats.includes(tab));
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--dark-soft);font-size:14px;">Products coming soon — check back shortly!</p>';
+      return;
+    }
+    filtered.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      const media = item.img
+        ? `<img src="${item.img}" alt="${item.name}">`
+        : `<div class="ph-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 15-5-4-4 3-3-2-6 5"/></svg><span>Photo Coming Soon</span></div>`;
+      card.innerHTML = `
+        <div class="item-media">${media}</div>
+        <div class="item-body">
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+          <div class="price-row">
+            <span class="price-tag">${item.price}</span>
+            ${item.pack ? `<span class="pack-note">${item.pack}</span>` : ''}
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() => grid.classList.add('in')));
+  }
+  document.getElementById('tabBar').addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTab(btn.dataset.tab);
+  });
+  renderTab('yoghurt');
+})();
+</script>
+</body>
+</html>
